@@ -1,0 +1,180 @@
+/* Main Container */
+.product-details-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Amazon Ember', Arial, sans-serif;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Product Card Layout */
+.product-details-card {
+  display: flex;
+  gap: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+/* Product Image */
+.product-image {
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+  background: #f7f7f7;
+  padding: 30px;
+  border: 1px solid #e7e7e7;
+  border-radius: 4px;
+}
+
+/* Product Information */
+.product-info {
+  flex: 1;
+}
+
+.product-info h2 {
+  font-size: 24px;
+  font-weight: 400;
+  color: #0F1111;
+  margin-bottom: 15px;
+}
+
+.product-info p {
+  font-size: 16px;
+  color: #565959;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.product-info strong {
+  color: #0F1111;
+}
+
+/* Price Styling */
+.price-display {
+  font-size: 28px;
+  color: #B12704;
+  margin: 20px 0;
+}
+
+.price-display::before {
+  content: "₹";
+  font-size: 20px;
+  vertical-align: super;
+  margin-right: 2px;
+}
+
+/* Reviews Section */
+.reviews-section {
+  margin-top: 30px;
+}
+
+.reviews-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F1111;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.review {
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f2f2;
+}
+
+.review strong {
+  color: #0066c0;
+  margin-right: 10px;
+}
+
+.review-rating {
+  color: #FFA41C;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Add Review Form */
+.add-review {
+  margin-top: 40px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.add-review h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #0F1111;
+}
+
+.add-review form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.add-review input,
+.add-review textarea,
+.add-review select {
+  padding: 10px 12px;
+  border: 1px solid #a6a6a6;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.add-review textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.add-review select {
+  width: 120px;
+  padding: 9px;
+}
+
+.add-review button {
+  background: #FFD814;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 200px;
+  transition: background 0.2s;
+}
+
+.add-review button:hover {
+  background: #F7CA00;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .product-details-card {
+    flex-direction: column;
+  }
+  
+  .product-image {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-image {
+    height: 300px;
+    padding: 20px;
+  }
+  
+  .product-info h2 {
+    font-size: 20px;
+  }
+  
+  .price-display {
+    font-size: 24px;
+  }
+}
