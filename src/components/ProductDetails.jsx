@@ -54,6 +54,14 @@ const ProductDetails = () => {
           product.reviews.map((review, index) => (
             <div key={index} className="review">
               <strong>{review.reviewer}</strong> ({review.rating}⭐): {review.comment}
+              <br />
+              <span style={{ fontSize: "0.9em", color: "gray" }}>
+                {review.classification && (
+                  <>
+                    <strong>{review.classification}</strong> – {review.explanation}
+                  </>
+                )}
+              </span>
             </div>
           ))
         ) : (

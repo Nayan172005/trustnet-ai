@@ -16,3 +16,5 @@ client/build/
 
 # Log files
 *.log
+
+*.gguf
