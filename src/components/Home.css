@@ -53,6 +53,7 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
   color: var(--amazon-text);
+  margin-right: 8px;
 }
 
 .home-add-button:hover {
@@ -75,4 +76,36 @@ body {
   padding: 40px;
   color: var(--amazon-text-light);
   font-size: 16px;
+}
+
+/* .home-moderator-button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.home-moderator-button:hover {
+  background-color: #0056b3;
+} */
+
+.home-moderator-button {
+  /* background-color: var(--amazon-yellow); */
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  color: var(--amazon-text);
+}
+
+.home-moderator-button:hover {
+  /* background-color: gray; */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }

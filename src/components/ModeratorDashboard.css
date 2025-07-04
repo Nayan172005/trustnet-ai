@@ -1,0 +1,214 @@
+/* Moderator Dashboard Styles */
+.moderator-dashboard {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Amazon Ember', Arial, sans-serif;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.moderator-dashboard h2 {
+  color: #0F1111;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.filters input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #a6a6a6;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 200px;
+  flex: 1;
+}
+
+.filters input[type="text"]:focus {
+  outline: none;
+  border-color: #FFA41C;
+  box-shadow: 0 0 0 3px rgba(255,164,28,0.2);
+}
+
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #0F1111;
+  cursor: pointer;
+}
+
+.filters input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #FFA41C;
+}
+
+/* Review Cards */
+.review-card {
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #e7e7e7;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.review-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.review-card.fake {
+  border-left: 4px solid #B12704;
+  background-color: #fff8f8;
+}
+
+.review-card p {
+  margin: 5px 0;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.review-card strong {
+  color: #0F1111;
+  font-weight: 600;
+  min-width: 100px;
+  display: inline-block;
+}
+
+/* Rating Stars */
+.review-card .rating {
+  color: #FFA41C;
+  font-weight: bold;
+}
+
+/* Classification Badges */
+.review-card .classification {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.review-card .classification.Fake {
+  background-color: #ffebee;
+  color: #B12704;
+}
+
+.review-card .classification.Real {
+  background-color: #e8f5e9;
+  color: #007600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .filters input[type="text"] {
+    width: 100%;
+  }
+  
+  .review-card p {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .review-card strong {
+    margin-bottom: 3px;
+  }
+}
+
+/* Moderator Actions Buttons */
+.moderator-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e7e7e7;
+}
+
+.moderator-actions button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid;
+}
+
+/* Delete Button - Amazon Danger Style */
+.moderator-actions button:first-child {
+  background-color: #fff;
+  border-color: #B12704;
+  color: #B12704;
+}
+
+.moderator-actions button:first-child:hover {
+  background-color: #ffebee;
+  border-color: #8a1c00;
+}
+
+/* Edit Button - Amazon Secondary Style */
+.moderator-actions button:last-child {
+  background-color: #fff;
+  border-color: #007185;
+  color: #007185;
+}
+
+.moderator-actions button:last-child:hover {
+  background-color: #f1f9fe;
+  border-color: #005a6e;
+}
+
+/* For when there's only one button (delete) */
+.moderator-actions button:only-child {
+  background-color: #fff;
+  border-color: #B12704;
+  color: #B12704;
+}
+
+.moderator-actions button:only-child:hover {
+  background-color: #ffebee;
+  border-color: #8a1c00;
+}
+
+/* Button focus states */
+.moderator-actions button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,164,28,0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .moderator-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .moderator-actions button {
+    width: 100%;
+  }
+}

@@ -178,3 +178,9 @@
     font-size: 24px;
   }
 }
+
+.fake-badge {
+  color: #e53935;
+  margin-left: 10px;
+  font-weight: bold;
+}

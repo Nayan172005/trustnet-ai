@@ -54,19 +54,16 @@ const ProductDetails = () => {
           product.reviews.map((review, index) => (
             <div key={index} className="review">
               <strong>{review.reviewer}</strong> ({review.rating}⭐): {review.comment}
-              <br />
-              <span style={{ fontSize: "0.9em", color: "gray" }}>
-                {review.classification && (
-                  <>
-                    <strong>{review.classification}</strong> – {review.explanation}
-                  </>
-                )}
-              </span>
+              {review.classification === "Fake" && (
+                <span className="fake-badge">🚩 Fake</span>
+              )}
+              <p><em>{review.explanation}</em></p>
             </div>
           ))
         ) : (
           <p>No reviews yet.</p>
         )}
+
         <h3>Add a Review</h3>
         <form
           onSubmit={async (e) => {
