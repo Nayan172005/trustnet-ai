@@ -37,16 +37,28 @@ const Home = () => {
     navigate(`/products/${productId}`);
   };
 
+  const goToModeratorDashboard = () => {
+    navigate("/moderator");
+  };
+
   return (
     <div className="home-container">
       <div className="home-header">
         <h1>TrustNet - Product Page</h1>
-        <button
-          className="home-add-button"
-          onClick={() => setShowAddForm(!showAddForm)}
-        >
-          {showAddForm ? "Cancel" : "Add Product"}
-        </button>
+        <div className="home-header-buttons">
+          <button
+            className="home-add-button"
+            onClick={() => setShowAddForm(!showAddForm)}
+          >
+            {showAddForm ? "Cancel" : "Add Product"}
+          </button>
+          <button
+            className="home-moderator-button"
+            onClick={goToModeratorDashboard}
+          >
+            Moderator Dashboard
+          </button>
+        </div>
       </div>
 
       {showAddForm && <AddProductForm onAdd={handleAddProduct} />}

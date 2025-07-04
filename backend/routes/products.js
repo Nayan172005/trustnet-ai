@@ -120,4 +120,41 @@ router.get("/moderator/reviews", async (req, res) => {
   }
 });
 
+// DELETE a review
+router.delete("/:productId/reviews/:reviewId", async (req, res) => {
+  try {
+    const { productId, reviewId } = req.params;
+    const product = await Product.findById(productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    product.reviews = product.reviews.filter((r) => r._id.toString() !== reviewId);
+    await product.save();
+    res.json({ message: "Review deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to delete review" });
+  }
+});
+
+// PUT (EDIT) a review classification
+router.put("/:productId/reviews/:reviewId", async (req, res) => {
+  try {
+    const { productId, reviewId } = req.params;
+    const { classification, explanation } = req.body;
+
+    const product = await Product.findById(productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    const review = product.reviews.id(reviewId);
+    if (!review) return res.status(404).json({ message: "Review not found" });
+
+    review.classification = classification;
+    review.explanation = explanation;
+    await product.save();
+
+    res.json({ message: "Review updated" });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update review" });
+  }
+});
+
 module.exports = router;
