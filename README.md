@@ -16,17 +16,33 @@ TrustNet was originally conceptualized for **HackOn with Amazon - Season 5** und
 
 > This project is a work in progress. Below is a breakdown of completed and pending modules.
 
-- [x] Frontend–backend structure initialized
-- [x] Basic API setup in Node.js and Express
-- [x] MongoDB integration for product/review data
-- [x] 🔗 Mistral-7B LLM integration (for fake review detection)
-- [x] 🧑‍💻 Moderator/admin dashboard with filters (by reviewer/product/fake only)
-- [x] ✏️ Edit option for misclassified reviews (with “Human Verified” update)
-- [x] 🗑️ Delete option for flagged fake reviews
-- [x] 🔖 Fake review badge added in UI
-- [ ] 🧠 Counterfeit detection module (ResNet + product metadata)
-- [ ] 📈 Timeline anomaly detection (Isolation Forest)
-- [ ] 📊 Admin analytics (planned)
+### Core Functionality
+- [x] Frontend–backend architecture setup
+- [x] RESTful APIs using Express + Mongoose
+- [x] MongoDB schema for product/review system
+
+### AI-Powered Features
+- [x] 🔗 Fake review detection using Mistral-7B via LLM API
+- [ ] 🧠 Counterfeit product detection using ResNet + metadata (planned)
+- [ ] 📈 Timeline anomaly detection using Isolation Forest (planned)
+
+### Moderator/Admin Panel
+- [x] 🎛️ Dashboard with filters (reviewer, product, classification)
+- [x] 🖊️ Edit review classification (e.g., mark as “Human Verified”)
+- [x] 🗑️ Delete flagged fake reviews
+- [x] 📊 Pie chart breakdown: % of fake vs real reviews
+- [x] ✅ Confirmation modals for sensitive actions
+- [x] 🌀 Processing loader while awaiting LLM response
+
+---
+
+## 💡 UI Enhancements
+
+- Review classification visibly tagged as `Fake` (red badge)
+- Real-time stats with interactive Recharts pie chart
+- Toast/error feedback via console fallback
+- Clean confirmation modals for edit/delete
+- Loader spinner while review is analyzed by Mistral LLM
 
 ---
 
@@ -40,7 +56,7 @@ The model analyzes reviews and responds with:
 
 > 🔧 *The LLM layer is modular and can later be fine-tuned or swapped for models like Zephyr or custom-distilled variants.*
 
-### 🔌 LLM Server Setup
+## 🔌 LLM Server Setup
 
 We use [`text-generation-webui`](https://github.com/oobabooga/text-generation-webui) to serve the Mistral model via OpenAI-style API endpoints.
 

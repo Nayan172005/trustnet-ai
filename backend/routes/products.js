@@ -157,4 +157,24 @@ router.put("/:productId/reviews/:reviewId", async (req, res) => {
   }
 });
 
+// Get review stats for chart (Fake vs Real)
+router.get("/moderator/review-stats", async (req, res) => {
+  try {
+    const products = await Product.find();
+    let fake = 0, real = 0;
+
+    products.forEach((product) => {
+      product.reviews.forEach((review) => {
+        if (review.classification === "Fake") fake++;
+        else if (review.classification === "Real") real++;
+      });
+    });
+
+    res.json({ fake, real });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 module.exports = router;

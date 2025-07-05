@@ -1,109 +1,234 @@
-/* Moderator Dashboard Styles */
+/* Amazon Color Variables */
+:root {
+  --amazon-orange: #FF9900;
+  --amazon-dark: #131921;
+  --amazon-light: #232F3E;
+  --amazon-yellow: #FFD814;
+  --amazon-yellow-dark: #F7CA00;
+  --amazon-gray: #EAEDED;
+  --amazon-text: #0F1111;
+  --amazon-text-light: #565959;
+  --amazon-white: #FFFFFF;
+  --amazon-danger: #B12704;
+  --amazon-success: #007600;
+  --amazon-blue: #007185;
+}
+
+/* Base Styles */
 .moderator-dashboard {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 25px;
   font-family: 'Amazon Ember', Arial, sans-serif;
-  background-color: white;
+  background-color: var(--amazon-white);
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
+/* Header Styles */
 .moderator-dashboard h2 {
-  color: #0F1111;
-  font-size: 24px;
+  color: var(--amazon-dark);
+  font-size: 28px;
   font-weight: 500;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e7e7e7;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--amazon-gray);
+  display: flex;
+  align-items: center;
 }
 
-/* Filters Section */
+.moderator-dashboard h2::before {
+  content: "📊";
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+/* Filters Section - Amazon Search Style */
 .filters {
   display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
+  gap: 20px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
   align-items: center;
-  padding: 15px;
-  background-color: #f9f9f9;
+  padding: 20px;
+  background-color: var(--amazon-gray);
   border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .filters input[type="text"] {
-  padding: 8px 12px;
+  padding: 10px 15px;
   border: 1px solid #a6a6a6;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 14px;
-  min-width: 200px;
+  min-width: 250px;
   flex: 1;
+  background-color: var(--amazon-white);
+  transition: all 0.2s;
 }
 
 .filters input[type="text"]:focus {
   outline: none;
-  border-color: #FFA41C;
+  border-color: var(--amazon-orange);
   box-shadow: 0 0 0 3px rgba(255,164,28,0.2);
 }
 
 .filters label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 14px;
-  color: #0F1111;
+  color: var(--amazon-text);
   cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.filters label:hover {
+  background-color: rgba(0,0,0,0.05);
 }
 
 .filters input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: #FFA41C;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--amazon-orange);
+  cursor: pointer;
 }
 
-/* Review Cards */
-.review-card {
-  padding: 20px;
-  margin-bottom: 15px;
+/* Enhanced Stats Container */
+.review-stats-container {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  background: var(--amazon-white);
   border-radius: 8px;
-  border: 1px solid #e7e7e7;
-  background-color: white;
-  transition: all 0.2s ease;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid var(--amazon-gray);
+}
+
+/* Chart Container - Now takes less space */
+.review-stats-chart {
+  flex: 1;
+  min-width: 300px;
+  padding: 15px;
+}
+
+.review-stats-chart h3{
+  margin-left: 145px;
+}
+
+/* New Stats Summary Panel */
+.stats-summary {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  padding: 15px;
+  background: var(--amazon-gray);
+  border-radius: 6px;
+}
+
+.stats-summary h3 {
+  color: var(--amazon-dark);
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d5dbdb;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e3e6e6;
+}
+
+.stat-label {
+  font-weight: 500;
+  color: var(--amazon-text);
+}
+
+.stat-value {
+  font-weight: 600;
+}
+
+.stat-value.fake {
+  color: var(--amazon-danger);
+}
+
+.stat-value.real {
+  color: var(--amazon-success);
+}
+
+.stat-value.total {
+  color: var(--amazon-blue);
+}
+
+/* Chart Enhancements */
+.recharts-pie {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.recharts-legend-item {
+  margin-right: 20px !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .review-stats-container {
+    flex-direction: column;
+  }
+  
+  .stats-summary {
+    margin-top: 20px;
+  }
+}
+
+/* Review Cards - Amazon Order History Style */
+.review-card {
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--amazon-gray);
+  background-color: var(--amazon-white);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
 }
 
 .review-card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
+  border-color: var(--amazon-orange);
 }
 
 .review-card.fake {
-  border-left: 4px solid #B12704;
+  border-left: 5px solid var(--amazon-danger);
   background-color: #fff8f8;
 }
 
 .review-card p {
-  margin: 5px 0;
+  margin: 8px 0;
   line-height: 1.5;
   font-size: 14px;
+  color: var(--amazon-text);
 }
 
 .review-card strong {
-  color: #0F1111;
+  color: var(--amazon-dark);
   font-weight: 600;
-  min-width: 100px;
+  min-width: 120px;
   display: inline-block;
-}
-
-/* Rating Stars */
-.review-card .rating {
-  color: #FFA41C;
-  font-weight: bold;
 }
 
 /* Classification Badges */
 .review-card .classification {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 4px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 5px 12px;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
@@ -111,19 +236,84 @@
 
 .review-card .classification.Fake {
   background-color: #ffebee;
-  color: #B12704;
+  color: var(--amazon-danger);
+  border: 1px solid #ffcdd2;
 }
 
 .review-card .classification.Real {
   background-color: #e8f5e9;
-  color: #007600;
+  color: var(--amazon-success);
+  border: 1px solid #c8e6c9;
+}
+
+/* Rating Stars */
+.rating-stars {
+  color: var(--amazon-orange);
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+/* Moderator Actions - Amazon Button Styles */
+.moderator-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--amazon-gray);
+}
+
+.moderator-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.moderator-actions button:first-child {
+  background-color: var(--amazon-danger);
+  color: white;
+}
+
+.moderator-actions button:first-child:hover {
+  background-color: #8a1c00;
+}
+
+.moderator-actions button:last-child {
+  background-color: var(--amazon-blue);
+  color: white;
+}
+
+.moderator-actions button:last-child:hover {
+  background-color: #005a6e;
+}
+
+.moderator-actions button:only-child {
+  background-color: var(--amazon-danger);
+  color: white;
+}
+
+.moderator-actions button:only-child:hover {
+  background-color: #8a1c00;
+}
+
+.moderator-actions button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,164,28,0.3);
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .filters {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 15px;
   }
   
   .filters input[type="text"] {
@@ -136,79 +326,166 @@
   }
   
   .review-card strong {
-    margin-bottom: 3px;
+    margin-bottom: 5px;
+  }
+  
+  .moderator-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .moderator-actions button {
+    width: 100%;
   }
 }
 
-/* Moderator Actions Buttons */
-.moderator-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #e7e7e7;
+@media (max-width: 768px) {
+  .moderator-dashboard {
+    padding: 15px;
+  }
+  
+  .review-card {
+    padding: 20px 15px;
+  }
+  
+  .review-stats-chart {
+    padding: 15px;
+  }
 }
 
-.moderator-actions button {
-  padding: 8px 16px;
+/* Animation for Fake Reviews */
+/* @keyframes pulseWarning {
+  0% { box-shadow: 0 0 0 0 rgba(177, 39, 4, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(177, 39, 4, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(177, 39, 4, 0); }
+} */
+
+.review-card.fake {
+  animation: pulseWarning 2s infinite;
+}
+
+/* Amazon-Style Confirmation Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal {
+  background-color: var(--amazon-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 450px;
+  padding: 25px;
+  border: 1px solid var(--amazon-gray);
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal h3 {
+  color: var(--amazon-dark);
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal h3::before {
+  content: "⚠️";
+  font-size: 24px;
+}
+
+.modal p {
+  color: var(--amazon-text);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.modal p em {
+  font-style: italic;
+  background-color: var(--amazon-gray);
+  padding: 8px 12px;
   border-radius: 4px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid;
+  border: none;
+  min-width: 100px;
 }
 
-/* Delete Button - Amazon Danger Style */
-.moderator-actions button:first-child {
-  background-color: #fff;
-  border-color: #B12704;
-  color: #B12704;
+.modal-buttons button.confirm {
+  background-color: var(--amazon-danger);
+  color: white;
 }
 
-.moderator-actions button:first-child:hover {
-  background-color: #ffebee;
-  border-color: #8a1c00;
+.modal-buttons button.confirm:hover {
+  background-color: #8a1c00;
 }
 
-/* Edit Button - Amazon Secondary Style */
-.moderator-actions button:last-child {
-  background-color: #fff;
-  border-color: #007185;
-  color: #007185;
+.modal-buttons button.cancel {
+  background-color: var(--amazon-gray);
+  color: var(--amazon-text);
+  border: 1px solid #a6a6a6;
 }
 
-.moderator-actions button:last-child:hover {
-  background-color: #f1f9fe;
-  border-color: #005a6e;
+.modal-buttons button.cancel:hover {
+  background-color: #e3e6e6;
 }
 
-/* For when there's only one button (delete) */
-.moderator-actions button:only-child {
-  background-color: #fff;
-  border-color: #B12704;
-  color: #B12704;
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.moderator-actions button:only-child:hover {
-  background-color: #ffebee;
-  border-color: #8a1c00;
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Button focus states */
-.moderator-actions button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255,164,28,0.3);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .moderator-actions {
-    flex-direction: column;
-    gap: 8px;
+/* Responsive Modal */
+@media (max-width: 600px) {
+  .modal {
+    width: 90%;
+    padding: 20px;
   }
   
-  .moderator-actions button {
+  .modal-buttons {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  
+  .modal-buttons button {
     width: 100%;
   }
 }
