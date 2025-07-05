@@ -10,6 +10,7 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [reviewer, setReviewer] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
 
   const fetchProduct = async () => {
@@ -68,18 +69,23 @@ const ProductDetails = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            setIsProcessing(true); // 🟡 Start processing
+
             try {
               await axios.post(`http://localhost:5000/api/products/${id}/reviews`, {
                 reviewer,
                 comment,
                 rating,
               });
+
               setComment("");
               setRating(5);
               setReviewer("");
-              fetchProduct(); // refresh the reviews
+              fetchProduct(); // refresh the product with new review
             } catch (err) {
               console.error("Failed to add review", err);
+            } finally {
+              setIsProcessing(false); // ✅ Done processing
             }
           }}
         >
@@ -101,6 +107,7 @@ const ProductDetails = () => {
               <option key={r} value={r}>{r} Star</option>
             ))}
           </select>
+          {isProcessing && <div className="spinner"></div>}
           <button type="submit">Submit Review</button>
         </form>
       </div>
