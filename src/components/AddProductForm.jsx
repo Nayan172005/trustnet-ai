@@ -3,37 +3,57 @@ import "./AddProductForm.css";
 
 const AddProductForm = ({ onAdd }) => {
   const [title, setTitle] = useState("");
+  const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("🚀 handleSubmit triggered");
 
-    const newProduct = {
-      title,
-      description,
-      price: Number(price),
-      imageUrl,
-    };
-
-    console.log("Submitting new product:", newProduct);
-
-    if (!title || !description || !price || !imageUrl) {
-      alert("Please fill in all fields.");
+    if (!title || !brand || !description || !price || !imageFile) {
+      alert("Please fill in all fields and upload an image.");
       return;
     }
 
-    onAdd(newProduct);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("brand", brand);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("image", imageFile);  // Make sure this is a File object!
+
+    // DEBUG LOGGING
+    for (let pair of formData.entries()) {
+      console.log(`📝 ${pair[0]}:`, pair[1]);
+    }
+
+    onAdd(formData);
   };
 
   return (
-    <form className="add-product-form" onSubmit={handleSubmit}>
+    <form className="add-product-form" onSubmit={handleSubmit} encType="multipart/form-data">
       <input
         type="text"
-        placeholder="Title"
+        placeholder="Product Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Brand Name"
+        value={brand}
+        onChange={(e) => setBrand(e.target.value)}
       />
       <textarea
         placeholder="Description"
@@ -46,12 +66,14 @@ const AddProductForm = ({ onAdd }) => {
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
-      <input
-        type="text"
-        placeholder="Image URL"
-        value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
-      />
+      <input type="file" accept="image/*" onChange={handleImageChange} />
+      {imagePreview && (
+        <img
+          src={imagePreview}
+          alt="Preview"
+          style={{ width: "150px", height: "auto", marginTop: "10px" }}
+        />
+      )}
       <button type="submit">Submit</button>
     </form>
   );
