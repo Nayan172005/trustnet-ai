@@ -23,15 +23,18 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-  const handleAddProduct = async (newProduct) => {
-    try {
-      const res = await axios.post("http://localhost:5000/api/products", newProduct);
-      setProducts((prev) => [...prev, res.data]);
-      setShowAddForm(false);
-    } catch (err) {
-      console.error("Error adding product:", err);
-    }
-  };
+const handleAddProduct = async (newProductFormData) => {
+  try {
+    const res = await axios.post("http://localhost:5000/api/products", newProductFormData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("✅ Upload success:", res.data);
+  } catch (err) {
+    console.error("❌ Upload failed:", err?.response?.data || err.message);
+  }
+};
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);

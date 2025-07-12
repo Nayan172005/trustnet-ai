@@ -16,17 +16,18 @@ TrustNet was originally conceptualized for **HackOn with Amazon - Season 5** und
 
 > This project is a work in progress. Below is a breakdown of completed and pending modules.
 
-### Core Functionality
+### ✅ Core Functionality
 - [x] Frontend–backend architecture setup
 - [x] RESTful APIs using Express + Mongoose
 - [x] MongoDB schema for product/review system
+- [x] **Cloudinary image upload integration for product images**
 
-### AI-Powered Features
+### 🤖 AI-Powered Features
 - [x] 🔗 Fake review detection using Mistral-7B via LLM API
-- [ ] 🧠 Counterfeit product detection using ResNet + metadata (planned)
+- [ ] 🧠 Counterfeit product detection using ResNet + metadata (in progress)
 - [ ] 📈 Timeline anomaly detection using Isolation Forest (planned)
 
-### Moderator/Admin Panel
+### 🧑‍💼 Moderator/Admin Panel
 - [x] 🎛️ Dashboard with filters (reviewer, product, classification)
 - [x] 🖊️ Edit review classification (e.g., mark as “Human Verified”)
 - [x] 🗑️ Delete flagged fake reviews
@@ -36,8 +37,29 @@ TrustNet was originally conceptualized for **HackOn with Amazon - Season 5** und
 
 ---
 
+## 📦 Cloudinary Integration
+
+Image uploads are now fully powered by **Cloudinary**, a robust cloud-based media management service. This integration allows TrustNet to:
+
+- Store product images securely in the cloud
+- Automatically optimize image URLs for fast frontend rendering
+- Provide high-quality input data for **counterfeit detection using ResNet**
+
+### 🔍 Why Cloudinary?
+
+Storing product images in the cloud (vs locally) is essential because:
+
+- Local files are **not accessible** to remote ML inference servers
+- ResNet-based counterfeit detection requires **reliable access to image URLs**
+- Cloudinary auto-hosts and serves optimized images with versioning and CDN support
+
+> ✅ This enables our pipeline to process image+metadata using models like ResNet efficiently and at scale.
+
+---
+
 ## 💡 UI Enhancements
 
+- Product images uploaded via Cloudinary and shown on cards
 - Review classification visibly tagged as `Fake` (red badge)
 - Real-time stats with interactive Recharts pie chart
 - Toast/error feedback via console fallback
@@ -70,6 +92,14 @@ python server.py --model mistral-7b-instruct-v0.2.Q4_K_M.gguf --api --nowebui --
 
 ---
 
+## 🧠 Counterfeit Product Detection (In Progress)
+
+We’re building a dedicated counterfeit detection module that:
+- Analyzes product image (from Cloudinary)
+- Uses metadata like title, brand, and description
+- Leverages a pre-trained ResNet model for classification
+- Returns result: Counterfeit or Genuine + confidence score
+
 ## 🛠️ Tech Stack
 
 | Layer        | Technologies                                     |
@@ -88,7 +118,6 @@ python server.py --model mistral-7b-instruct-v0.2.Q4_K_M.gguf --api --nowebui --
 trustnet-ai/
 ├── backend/               # Express backend
 │   ├── config/
-│   ├── controllers/
 │   ├── models/
 │   ├── routes/
 │   ├── utils/
