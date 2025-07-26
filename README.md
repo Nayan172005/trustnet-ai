@@ -24,8 +24,9 @@ TrustNet was originally conceptualized for **HackOn with Amazon - Season 5** und
 
 ### 🤖 AI-Powered Features
 - [x] 🔗 Fake review detection using Mistral-7B via LLM API
-- [ ] 🧠 Counterfeit product detection using ResNet + metadata (in progress)
-- [ ] 📈 Timeline anomaly detection using Isolation Forest (planned)
+- [x] 🧠 **Counterfeit product detection pipeline complete using Resnet** (with image + metadata)
+- [ ] 🔁 Counterfeit model logic enhancement via **comparison-based or hybrid approach** *(planned)*
+- [ ] 📈 Timeline anomaly detection using Isolation Forest *(planned)*
 
 ### 🧑‍💼 Moderator/Admin Panel
 - [x] 🎛️ Dashboard with filters (reviewer, product, classification)
@@ -34,6 +35,7 @@ TrustNet was originally conceptualized for **HackOn with Amazon - Season 5** und
 - [x] 📊 Pie chart breakdown: % of fake vs real reviews
 - [x] ✅ Confirmation modals for sensitive actions
 - [x] 🌀 Processing loader while awaiting LLM response
+- [x] 📊 **New counterfeit stats pie chart and product filter**
 
 ---
 
@@ -65,6 +67,7 @@ Storing product images in the cloud (vs locally) is essential because:
 - Toast/error feedback via console fallback
 - Clean confirmation modals for edit/delete
 - Loader spinner while review is analyzed by Mistral LLM
+- **Counterfeit dashboard with stats, filter by product, and modals**
 
 ---
 
@@ -92,23 +95,37 @@ python server.py --model mistral-7b-instruct-v0.2.Q4_K_M.gguf --api --nowebui --
 
 ---
 
-## 🧠 Counterfeit Product Detection (In Progress)
+## 🧠 Counterfeit Product Detection (Pipeline Ready ✅)
 
-We’re building a dedicated counterfeit detection module that:
-- Analyzes product image (from Cloudinary)
-- Uses metadata like title, brand, and description
-- Leverages a pre-trained ResNet model for classification
-- Returns result: Counterfeit or Genuine + confidence score
+The **full backend pipeline** for counterfeit detection is now implemented. When a product is uploaded:
+
+- 🖼️ The **product image** (hosted on Cloudinary) and metadata (title, brand, description) are passed to a Python-based detection script.
+- 🧠 A **pre-trained ResNet-50 model** processes the image alongside the metadata to generate a prediction.
+- 📊 The resulting **label**, **confidence score**, and **explanation** are returned to the backend and saved in MongoDB.
+- 🎯 The **Moderator Dashboard** reflects the classification result with filter/sorting options and a pie chart breakdown.
+
+---
+
+### ⚠️ Accuracy Enhancement Pending
+
+While the detection pipeline works end-to-end, the current model uses a basic logic setup. To improve the accuracy:
+
+- 🔍 Plan to **train or enhance** the model using a **comparison-based approach** leveraging image/text embeddings.
+- 🔗 Explore a **hybrid model** that combines **image similarity** + **textual metadata embeddings** for better precision.
+
+The goal is to accurately classify counterfeit vs. genuine products across diverse datasets.
+
+---
 
 ## 🛠️ Tech Stack
 
-| Layer        | Technologies                                     |
-|--------------|--------------------------------------------------|
-| Frontend     | React.js                                         |
-| Backend      | Node.js, Express.js                              |
-| Database     | MongoDB, Mongoose                                |
-| AI Modules   | ResNet-50, DistilBERT, Isolation Forest (planned)|
-| LLM Engine   | Mistral-7B via llama.cpp (OpenAI-compatible API) |
+| Layer        | Technologies                                           |
+|--------------|--------------------------------------------------------|
+| Frontend     | React.js                                               |
+| Backend      | Node.js, Express.js                                    |
+| Database     | MongoDB, Mongoose                                      |
+| AI Modules   | ResNet-50, all-MiniLM-L6-v2, Isolation Forest (planned)|
+| LLM Engine   | Mistral-7B via llama.cpp (OpenAI-compatible API)       |
 
 ---
 
@@ -122,6 +139,12 @@ trustnet-ai/
 │   ├── routes/
 │   ├── utils/
 │   └── server.js
+├── data/                  # Product samples & feature npy files
+│   ├── features/
+│   └── product_samples.json
+├── ml/                    # AI/ML scripts for prediction
+│   ├── predict_counterfeit.py
+│   └── combine_features.py
 ├── docs/ 
 │   └── HackOn_Presentation.pdf
 ├── public/                # Frontend static assets
@@ -158,3 +181,11 @@ node server.js
 ### Start frontend-
 cd ../
 npm start
+
+---
+
+### 📌 Notes
+
+- 🚧 This project is a **solo build**, and development is ongoing.
+- 📈 Expect continuous improvements in **model accuracy**, **user experience**, and **performance**.
+- 🤝 Contributions or suggestions are always welcome via [Issues](https://github.com/Nayan172005/trustnet-ai/issues) or PRs.

@@ -1,0 +1,92 @@
+[
+  {
+    "product_id": "prod_001",
+    "title": "Nike Air Max 270",
+    "brand": "Nike",
+    "description": "Original Nike Air Max 270 with breathable mesh and iconic air sole.",
+    "price": "11999",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753291453/main-square_87a99364-0fdf-4670-9681-3274b2b23217_540x_hmrvrw.webp",
+    "label": 0
+  },
+  {
+    "product_id": "prod_002",
+    "title": "Nike AirMax 270",
+    "brand": "Nikee",
+    "description": "Original Air max shoes for menz with comfort sole",
+    "price": "2999",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753291453/main-square_87a99364-0fdf-4670-9681-3274b2b23217_540x_hmrvrw.webp",
+    "label": 1
+  },
+  {
+    "product_id": "prod_003",
+    "title": "Samsung Galaxy Buds 2 Pro",
+    "brand": "Samsung",
+    "description": "Wireless earbuds with ANC, 360 Audio, and seamless device switching.",
+    "price": "15990",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753291868/61YP3nZAptL._SX679_18dc2e60-e921-4d88-8a02-72b64d4112be_dqk3uk.webp",
+    "label": 0
+  },
+  {
+    "product_id": "prod_004",
+    "title": "Samzung Buds Pro 2",
+    "brand": "Samsung",
+    "description": "Superb audio quality and wireles connectivty, compitable with all phone.",
+    "price": "1899",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753291868/61YP3nZAptL._SX679_18dc2e60-e921-4d88-8a02-72b64d4112be_dqk3uk.webp",
+    "label": 1
+  },
+  {
+    "product_id": "prod_005",
+    "title": "Apple AirPods Pro (2nd Gen)",
+    "brand": "Apple",
+    "description": "H2 chip for superior sound, Adaptive Transparency, MagSafe charging case.",
+    "price": "26999",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753295962/KangetAppleAirpodsImage_01_1920x_z2gwga.webp",
+    "label": 0
+  },
+  {
+    "product_id": "prod_006",
+    "title": "Apple Airpods Pro (2)",
+    "brand": "Apple",
+    "description": "new chip for hi-res audio, Transparancy mode, wirelss charge support",
+    "price": "3899",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753295961/Untitled_design_ntbyrj.webp",
+    "label": 1
+  },
+  {
+    "product_id": "prod_007",
+    "title": "Sony WH-1000XM5 Wireless Headphones",
+    "brand": "Sony",
+    "description": "Industry-leading noise cancellation, 30-hour battery, lightweight design.",
+    "price": "29990",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753292700/sony-wh-1000xm5-wireless-industry-leading-active-noise-cancelling-headphones-with-mic-with-auto-noise-cancelling-optimizer-8-mics-for-crystal-clear-hands-free-calling-google-fast-pair-swift-pair-and-alexa-voice-contr_ke03pd.webp",
+    "label": 0
+  },
+  {
+    "product_id": "prod_008",
+    "title": "Sony WH1000X M5",
+    "brand": "Sonny",
+    "description": "Noise cancelling headset with rich bass and soft cup. Good qulity.",
+    "price": "3499",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753292700/sony-wh-1000xm5-wireless-industry-leading-active-noise-cancelling-headphones-with-mic-with-auto-noise-cancelling-optimizer-8-mics-for-crystal-clear-hands-free-calling-google-fast-pair-swift-pair-and-alexa-voice-contr_ke03pd.webp",
+    "label": 1
+  },
+  {
+    "product_id": "prod_009",
+    "title": "HP Envy x360 Laptop 14-inch",
+    "brand": "HP",
+    "description": "Intel Core i5, 16GB RAM, 512GB SSD, FHD touchscreen with backlit keyboard.",
+    "price": "72999",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753297150/HP_Pavilion_x360_14-ek0078TU-800x800_fxztjg.webp",
+    "label": 0
+  },
+  {
+    "product_id": "prod_010",
+    "title": "HP Envy Laptop",
+    "brand": "HP",
+    "description": "core i5 16gb ram 512ssd window 11, good for all tasks and gaming",
+    "price": "15999",
+    "image_path": "https://res.cloudinary.com/dluh3otah/image/upload/v1753297150/hp-14s-14-ep0294tu-standard-laptop-13th-generation-intel-core-i3-1315u-8-gb-512-gbssd-intel-integrated-soc-windows-11-home-msoffice-home-2024-1-year-m365-basic-full-hd-35-81-cm-14-1-inch-natural-silver-digital-o49458_kvrrr1.webp",
+    "label": 1
+  }
+]
