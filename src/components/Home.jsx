@@ -25,14 +25,15 @@ const Home = () => {
 
 const handleAddProduct = async (newProductFormData) => {
   try {
-    const res = await axios.post("http://localhost:5000/api/products", newProductFormData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    // const res = await axios.post("http://localhost:5000/api/products", newProductFormData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // });
+    const res=await axios.post("http://localhost:5000/api/products", newProductFormData);
     console.log("✅ Upload success:", res.data);
   } catch (err) {
-    console.error("❌ Upload failed:", err?.response?.data || err.message);
+    console.error("❌ Upload failed:", JSON.stringify(err?.response?.data || err.message, null, 2));
   }
 };
 
