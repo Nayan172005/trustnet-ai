@@ -18,3 +18,9 @@ client/build/
 *.log
 
 *.gguf
+
+# Ignore extracted and generated features
+/data/features/*.npy
+/data/features/*.json
+
+__pycache__/

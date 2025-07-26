@@ -24,18 +24,16 @@ const reviewSchema = new mongoose.Schema({
 });
 
 const productSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  brand: {
-    type: String,
-    required: true,
-  },
+  title: { type: String, required: true },
+  brand: { type: String, required: true },
   description: String,
   price: Number,
   imageUrl: String,
   reviews: [reviewSchema],
+  isCounterfeit: Boolean,
+  predictionConfidence: Number,
+  explanation: String
 });
+
 
 module.exports = mongoose.model("Product", productSchema);
