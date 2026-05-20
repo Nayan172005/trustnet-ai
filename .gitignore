@@ -2,25 +2,33 @@
 node_modules/
 npm-debug.log
 
-# React build files
-client/build/
+# Frontend Build
+frontend/dist/
+frontend/build/
 
-# VS Code
-.vscode/
+# Python
+__pycache__/
+*.pyc
+venv/
 
-# MacOS Finder
-.DS_Store
+# Jupyter
+.ipynb_checkpoints/
 
-# Environment variables (local settings)
+# Environment Variables
 .env
+frontend/.env
+backend/.env
 
-# Log files
+# Logs
 *.log
 
+# ML Models / Large Files
 *.gguf
 
-# Ignore extracted and generated features
-/data/features/*.npy
-/data/features/*.json
+# Generated Feature Files
+data/features/*.npy
+data/features/*.json
 
-__pycache__/
+# OS / Editor
+.vscode/
+.DS_Store
