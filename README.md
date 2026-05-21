@@ -12,51 +12,98 @@ The project combines Deep Learning, NLP, Computer Vision, and full-stack web tec
 
 # Current Progress
 
-## Completed Module
-### Fake Review Detection (BiLSTM + Multimodal Fusion)
+## Completed Modules
 
-Implemented and trained two deep learning models for fake review detection using TensorFlow/Keras:
+### 1. Fake Review Detection (BiLSTM + Multimodal Fusion)
 
-### V1 — Text-Only BiLSTM
-- Input:
-  - Review text
-- Architecture:
-  - Embedding Layer
-  - Bidirectional LSTM
-  - Dense Layers
-- Built using:
-  - Sequential API
-
-### V2 — Multimodal Fake Review Detector
-- Inputs:
-  - Review text
-  - Rating metadata
-- Architecture:
-  - Text embedding branch
-  - BiLSTM branch
-  - Rating feature branch
-  - Feature concatenation
-  - Dense classification head
-- Built using:
-  - Functional API
+Implemented and trained two deep learning models for fake review detection using TensorFlow/Keras.
 
 ---
 
-# Model Performance
+## V1 — Text-Only BiLSTM
 
-## V1 Results
+### Input
+- Review text
+
+### Architecture
+- Embedding Layer
+- Bidirectional LSTM
+- Dense Layers
+
+### Built Using
+- TensorFlow / Keras Sequential API
+
+### Performance
 - Accuracy: ~96%
-- Strong detection of:
-  - exaggerated reviews
-  - repetitive sentiment
-  - suspicious marketing language
 
-## V2 Results
+---
+
+## V2 — Multimodal Fake Review Detector
+
+### Inputs
+- Review text
+- Rating metadata
+
+### Architecture
+- Text embedding branch
+- BiLSTM branch
+- Rating feature branch
+- Feature concatenation
+- Dense classification head
+
+### Built Using
+- TensorFlow / Keras Functional API
+
+### Performance
 - Accuracy: ~97%
-- Improved:
-  - calibration
-  - false positive reduction
-  - multimodal learning
+
+---
+
+# Fake Review Detection Architecture
+
+![Fake Review Detector V2](docs/architecture/Fake%20Review%20Detector%20V2%20-%20Functional%20API%20Architecture.png)
+
+---
+
+# Counterfeit Metadata Detection (Current Progress)
+
+Implemented a Siamese Neural Network based metadata embedding architecture for semantic counterfeit similarity learning.
+
+---
+
+## Siamese Metadata Embedding Architecture
+
+![Metadata Siamese Architecture](docs/architecture/Metadata%20Siamese%20Architecture.png)
+
+---
+
+## Shared Encoder Architecture
+
+![Shared Encoder Architecture](docs/architecture/Shared%20Encoder%20Architecture.png)
+
+---
+
+# Metadata Embedding Pipeline
+
+- Metadata tokenization
+- Integer sequence generation
+- Sequence padding
+- Embedding learning
+- BiLSTM sequence modeling
+- Global max pooling
+- 128-dimensional metadata embedding generation
+
+### Similarity Learning
+- Positive pairs:
+  - genuine ↔ counterfeit-style metadata
+- Negative pairs:
+  - unrelated metadata pairs
+
+### Learning Strategy
+- Siamese shared encoder
+- Cosine similarity learning
+- Metric learning
+- Semantic embedding space generation
 
 ---
 
@@ -76,53 +123,42 @@ Implemented and trained two deep learning models for fake review detection using
 - Pandas
 - Scikit-learn
 
-## Planned Vision Models
-- ResNet50
-- CNN-based counterfeit detection
+---
 
-## Planned NLP Models
-- Metadata embedding models
-- Semantic similarity learning
+# Planned Vision Models
+
+## Counterfeit Image Detection
+- ResNet50 feature extraction
+- CNN-based counterfeit learning
+- Image similarity learning
+- Visual embedding generation
 
 ---
 
-# Project Structure
+# Planned NLP Extensions
+
+## Metadata Retrieval System
+- Vector similarity search
+- Embedding retrieval pipelines
+- Semantic nearest-neighbor search
+- FAISS / Vector DB integration
+
+---
+
+# Current Project Structure
 
 ```text
 trustnet-ai/
 │
 ├── backend/
-│
 ├── frontend/
-│
 ├── ml/
 │   ├── fake_review_detection/
 │   ├── counterfeit_metadata_detection/
 │   └── counterfeit_image_detection/
 │
 ├── docs/
-│
 └── README.md
-```
-
----
-
-# Fake Review Detection Pipeline
-
-```text
-Review Text
-    ↓
-Tokenizer
-    ↓
-Padding
-    ↓
-Embedding Layer
-    ↓
-BiLSTM
-    ↓
-Feature Fusion (Rating Metadata)
-    ↓
-Classification
 ```
 
 ---
@@ -136,6 +172,7 @@ Classification
 - Embedding learning
 - BiLSTM sequence modeling
 - Functional API multimodal architecture
+- Siamese metric learning
 - Confusion matrix evaluation
 - Precision / Recall / F1 analysis
 - Inference testing
@@ -143,25 +180,26 @@ Classification
 
 ---
 
-# Planned Modules
+# Unified Trust Pipeline (Planned)
 
-## Counterfeit Metadata Detection
-- Semantic embedding learning
-- Counterfeit-style metadata generation
-- Similarity modeling
-
-## Counterfeit Image Detection
-- ResNet50 feature extraction
-- Visual similarity learning
-- Counterfeit image classification
-
-## Unified Trust Scoring
 Final system will combine:
-- review analysis
-- metadata analysis
-- image analysis
+- Review analysis
+- Metadata analysis
+- Image analysis
 
-into a single trust prediction pipeline.
+into a unified AI-powered trust scoring pipeline.
+
+---
+
+# Future Plans
+
+- Integrate all AI modules into the React + Node.js application
+- Build real-time moderation dashboard
+- Add counterfeit similarity retrieval
+- Integrate vector database search
+- Deploy multimodal AI pipeline
+- Add explainability & confidence scoring
+- Optimize inference pipelines
 
 ---
 
@@ -173,34 +211,29 @@ This project is also being used as a deep learning engineering learning journey 
 - Embeddings
 - Sequence modeling
 - Functional API
-- Multimodal architectures
-- CNNs & transfer learning
-- AI system integration
-- Full-stack AI deployment
+- Siamese Networks
+- Metric Learning
+- CNNs & Transfer Learning
+- Multimodal AI Systems
+- AI System Integration
+- Full-stack AI Deployment
 
 ---
 
-# Future Plans
+# Current Status
 
-- Integrate all AI modules into the React + Node.js application
-- Build real-time moderation dashboard
-- Deploy multimodal AI pipeline
-- Add explainability & confidence scoring
-- Optimize inference pipelines
+## Completed
+- Fake Review Detection Module
+- Multimodal Review Classification
+- Metadata Siamese Embedding Learning
 
----
-
-# Status
-
-Current Stage:
-### Fake Review Detection Module Complete
-
-Next Stage:
-### Counterfeit Metadata Detection + Image Detection
+## In Progress
+- Counterfeit Metadata Retrieval
+- Counterfeit Image Detection
 
 ---
 
 # Author
 
-Built as part of the TrustNet AI project focused on AI-powered trust, authenticity, and counterfeit detection systems.
+Built as part of the TrustNet AI project focused on AI-powered trust, authenticity, counterfeit detection, and multimodal semantic analysis systems.
 
