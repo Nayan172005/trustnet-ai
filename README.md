@@ -61,11 +61,11 @@ Implemented and trained two deep learning models for fake review detection using
 
 # Fake Review Detection Architecture
 
-![Fake Review Detector V2](docs/architecture/Fake%20Review%20Detector%20V2%20-%20Functional%20API%20Architecture.png)
+![Fake Review Detector V2](docs/architecture/Fake%20Review%20Detector%20V2%20Architecture.png)
 
 ---
 
-# Counterfeit Metadata Detection (Current Progress)
+# Counterfeit Metadata Detection
 
 Implemented a Siamese Neural Network based metadata embedding architecture for semantic counterfeit similarity learning.
 
@@ -107,6 +107,53 @@ Implemented a Siamese Neural Network based metadata embedding architecture for s
 
 ---
 
+# Counterfeit Image Detection
+
+Implemented a ResNet50-based visual embedding extraction pipeline for counterfeit image similarity analysis.
+
+---
+
+## Image Embedding Pipeline
+
+### Architecture
+- Pretrained ResNet50
+- GlobalAveragePooling2D
+- 2048-dimensional visual embeddings
+
+### Workflow
+
+```text
+Input Image
+      ↓
+Resize + Preprocessing
+      ↓
+ResNet50 (ImageNet pretrained)
+      ↓
+GlobalAveragePooling2D
+      ↓
+2048-D Visual Embedding
+      ↓
+Cosine Similarity
+      ↓
+Visual Similarity Score
+```
+
+### Current Progress
+- Visual embedding extraction completed
+- 2048-dimensional image embeddings generated
+- Embedding persistence pipeline implemented
+- Filename ↔ embedding mapping implemented
+- Sampled sneaker image dataset prepared
+
+### Planned Next Steps
+- Similarity retrieval system
+- Nearest-neighbor search
+- Visual clustering
+- Counterfeit similarity scoring
+- Multimodal fusion with metadata + reviews
+
+---
+
 # Tech Stack
 
 ## Frontend
@@ -123,25 +170,10 @@ Implemented a Siamese Neural Network based metadata embedding architecture for s
 - Pandas
 - Scikit-learn
 
----
-
-# Planned Vision Models
-
-## Counterfeit Image Detection
-- ResNet50 feature extraction
-- CNN-based counterfeit learning
-- Image similarity learning
-- Visual embedding generation
-
----
-
-# Planned NLP Extensions
-
-## Metadata Retrieval System
-- Vector similarity search
-- Embedding retrieval pipelines
-- Semantic nearest-neighbor search
-- FAISS / Vector DB integration
+## Computer Vision
+- ResNet50
+- Transfer Learning
+- Visual Embedding Extraction
 
 ---
 
@@ -151,38 +183,63 @@ Implemented a Siamese Neural Network based metadata embedding architecture for s
 trustnet-ai/
 │
 ├── backend/
+│
 ├── frontend/
+│
 ├── ml/
+│   │
 │   ├── fake_review_detection/
+│   │
 │   ├── counterfeit_metadata_detection/
-│   └── counterfeit_image_detection/
+│   │
+│   ├── counterfeit_image_detection/
+│   │
+│   └── multimodal_fusion/
 │
 ├── docs/
-└── README.md
+│   └── architecture/
+│
+├── README.md
+└── LICENSE
 ```
 
 ---
 
 # Features Implemented
 
-- Custom dataset engineering
+## NLP
 - Fake review synthetic generation
-- NLP preprocessing pipeline
 - Tokenization & padding
 - Embedding learning
 - BiLSTM sequence modeling
-- Functional API multimodal architecture
+- Functional API multimodal learning
 - Siamese metric learning
+
+## Computer Vision
+- ResNet50 feature extraction
+- Visual embedding generation
+- Image preprocessing pipeline
+- Embedding persistence
+- Cosine similarity preparation
+
+## Evaluation
 - Confusion matrix evaluation
 - Precision / Recall / F1 analysis
+- Validation monitoring
 - Inference testing
-- Model persistence (.keras + tokenizer)
+
+## System Design
+- Modular ML architecture
+- Separate modality pipelines
+- Shared embedding-based design
+- Multimodal AI workflow planning
 
 ---
 
 # Unified Trust Pipeline (Planned)
 
 Final system will combine:
+
 - Review analysis
 - Metadata analysis
 - Image analysis
@@ -197,9 +254,11 @@ into a unified AI-powered trust scoring pipeline.
 - Build real-time moderation dashboard
 - Add counterfeit similarity retrieval
 - Integrate vector database search
+- Build nearest-neighbor retrieval system
 - Deploy multimodal AI pipeline
 - Add explainability & confidence scoring
 - Optimize inference pipelines
+- Add multimodal trust fusion model
 
 ---
 
@@ -213,7 +272,8 @@ This project is also being used as a deep learning engineering learning journey 
 - Functional API
 - Siamese Networks
 - Metric Learning
-- CNNs & Transfer Learning
+- Transfer Learning
+- Computer Vision
 - Multimodal AI Systems
 - AI System Integration
 - Full-stack AI Deployment
@@ -226,14 +286,20 @@ This project is also being used as a deep learning engineering learning journey 
 - Fake Review Detection Module
 - Multimodal Review Classification
 - Metadata Siamese Embedding Learning
+- ResNet50 Visual Embedding Pipeline
 
 ## In Progress
 - Counterfeit Metadata Retrieval
-- Counterfeit Image Detection
+- Visual Similarity Retrieval
+- Counterfeit Image Similarity Analysis
+
+## Upcoming
+- Multimodal Fusion
+- Unified Trust Scoring
+- Full-stack AI Deployment
 
 ---
 
 # Author
 
 Built as part of the TrustNet AI project focused on AI-powered trust, authenticity, counterfeit detection, and multimodal semantic analysis systems.
-
