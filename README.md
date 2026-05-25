@@ -1,3 +1,4 @@
+
 # TrustNet AI
 
 TrustNet AI is a multimodal AI-powered trust and authenticity analysis platform focused on detecting:
@@ -6,7 +7,7 @@ TrustNet AI is a multimodal AI-powered trust and authenticity analysis platform 
 - Counterfeit product metadata
 - Counterfeit product images
 
-The project combines Deep Learning, NLP, Computer Vision, and full-stack web technologies into a unified moderation and trust analysis system.
+The project combines Deep Learning, NLP, Computer Vision, Retrieval Systems, and full-stack web technologies into a unified moderation and trust analysis system.
 
 ---
 
@@ -109,11 +110,17 @@ Implemented a Siamese Neural Network based metadata embedding architecture for s
 
 # Counterfeit Image Detection
 
-Implemented a ResNet50-based visual embedding extraction pipeline for counterfeit image similarity analysis.
+Implemented a ResNet50-based visual embedding extraction and retrieval pipeline for counterfeit image similarity analysis.
 
 ---
 
-## Image Embedding Pipeline
+## ResNet50 Image Embedding & Retrieval Architecture
+
+![ResNet50 Retrieval Architecture](docs/architecture/ResNet50%20Image%20Embedding%20and%20Retrieval%20Architecture.png)
+
+---
+
+# Image Embedding Pipeline
 
 ### Architecture
 - Pretrained ResNet50
@@ -133,24 +140,83 @@ GlobalAveragePooling2D
       ↓
 2048-D Visual Embedding
       ↓
-Cosine Similarity
+Cosine Similarity Retrieval
       ↓
-Visual Similarity Score
+Top-K Similar Images
 ```
 
-### Current Progress
-- Visual embedding extraction completed
-- 2048-dimensional image embeddings generated
-- Embedding persistence pipeline implemented
-- Filename ↔ embedding mapping implemented
-- Sampled sneaker image dataset prepared
+---
 
-### Planned Next Steps
-- Similarity retrieval system
-- Nearest-neighbor search
-- Visual clustering
-- Counterfeit similarity scoring
-- Multimodal fusion with metadata + reviews
+# Visual Similarity Retrieval System
+
+Implemented an embedding-based nearest-neighbor retrieval system using cosine similarity.
+
+### Current Capabilities
+- Query image embedding generation
+- Similar image retrieval
+- Top-K nearest-neighbor search
+- Cosine similarity scoring
+- Embedding persistence pipeline
+- Filename ↔ embedding mapping
+- Sampled sneaker dataset generation
+
+### Retrieval Workflow
+
+```text
+Query Image
+      ↓
+ResNet50 Embedding
+      ↓
+Cosine Similarity
+      ↓
+Nearest Neighbor Retrieval
+      ↓
+Top-K Similar Sneakers
+```
+
+---
+
+# Embedding Visualization & Clustering
+
+Implemented semantic embedding space visualization using t-SNE and KMeans clustering.
+
+### Techniques Used
+- t-SNE dimensionality reduction
+- KMeans unsupervised clustering
+- Semantic embedding visualization
+- Visual manifold analysis
+
+### Current Insights
+- Similar sneaker structures cluster together
+- Embeddings capture color/style semantics
+- Visual neighborhoods emerge naturally
+- Representation space preserves semantic similarity
+
+### Visualization Workflow
+
+```text
+2048-D Image Embeddings
+            ↓
+KMeans Clustering (Original Space)
+            ↓
+t-SNE Projection (2D Visualization)
+            ↓
+Semantic Cluster Visualization
+```
+
+---
+
+## t-SNE Semantic Embedding Clusters
+
+The visualization below shows the semantic organization of sneaker image embeddings generated using ResNet50.
+
+- t-SNE was used for dimensionality reduction from 2048-D → 2D
+- KMeans clustering was performed on the original embedding vectors
+- Similar sneaker structures and visual styles naturally grouped together in embedding space
+
+This demonstrates that the learned embeddings preserve semantic visual similarity.
+
+![t-SNE Shoe Embedding Clusters](docs/architecture/tsne_shoe_embedding_clusters.png)
 
 ---
 
@@ -174,6 +240,7 @@ Visual Similarity Score
 - ResNet50
 - Transfer Learning
 - Visual Embedding Extraction
+- Retrieval Systems
 
 ---
 
@@ -220,13 +287,22 @@ trustnet-ai/
 - Visual embedding generation
 - Image preprocessing pipeline
 - Embedding persistence
-- Cosine similarity preparation
+- Cosine similarity retrieval
+- Nearest-neighbor image search
+- Semantic image clustering
+- t-SNE visualization pipeline
 
 ## Evaluation
 - Confusion matrix evaluation
 - Precision / Recall / F1 analysis
 - Validation monitoring
 - Inference testing
+
+## Retrieval Systems
+- Embedding similarity search
+- Cosine similarity retrieval
+- Vector-space semantic learning
+- Unsupervised embedding clustering
 
 ## System Design
 - Modular ML architecture
@@ -253,8 +329,8 @@ into a unified AI-powered trust scoring pipeline.
 - Integrate all AI modules into the React + Node.js application
 - Build real-time moderation dashboard
 - Add counterfeit similarity retrieval
-- Integrate vector database search
-- Build nearest-neighbor retrieval system
+- Integrate vector database search (FAISS)
+- Build scalable nearest-neighbor retrieval
 - Deploy multimodal AI pipeline
 - Add explainability & confidence scoring
 - Optimize inference pipelines
@@ -274,6 +350,9 @@ This project is also being used as a deep learning engineering learning journey 
 - Metric Learning
 - Transfer Learning
 - Computer Vision
+- Representation Learning
+- Retrieval Systems
+- Vector Similarity Search
 - Multimodal AI Systems
 - AI System Integration
 - Full-stack AI Deployment
@@ -287,13 +366,17 @@ This project is also being used as a deep learning engineering learning journey 
 - Multimodal Review Classification
 - Metadata Siamese Embedding Learning
 - ResNet50 Visual Embedding Pipeline
+- Cosine Similarity Image Retrieval
+- Semantic Embedding Visualization
+- KMeans Semantic Clustering
 
 ## In Progress
 - Counterfeit Metadata Retrieval
-- Visual Similarity Retrieval
+- Visual Similarity Retrieval Optimization
 - Counterfeit Image Similarity Analysis
 
 ## Upcoming
+- FAISS Vector Database Integration
 - Multimodal Fusion
 - Unified Trust Scoring
 - Full-stack AI Deployment
@@ -302,4 +385,4 @@ This project is also being used as a deep learning engineering learning journey 
 
 # Author
 
-Built as part of the TrustNet AI project focused on AI-powered trust, authenticity, counterfeit detection, and multimodal semantic analysis systems.
+Built as part of the TrustNet AI project focused on AI-powered trust, authenticity, counterfeit detection, retrieval systems, and multimodal semantic analysis.
