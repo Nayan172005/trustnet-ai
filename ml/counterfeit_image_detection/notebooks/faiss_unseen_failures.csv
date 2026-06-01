@@ -1,0 +1,11 @@
+query,query_brand,top1_brand,majority_brand,top5_brands
+new balance-1.jpg,newbalance,vans,vans,"['vans', 'vans', 'vans', 'vans', 'vans']"
+new balance-3.jpg,newbalance,vans,vans,"['vans', 'vans', 'vans', 'vans', 'vans']"
+nike-4.jpg,nike,puma,puma,"['puma', 'puma', 'puma', 'puma', 'puma']"
+nike-5.jpg,nike,puma,puma,"['puma', 'puma', 'puma', 'nike', 'puma']"
+resized_padded_puma_210.jpg,puma,underarmour,underarmour,"['underarmour', 'underarmour', 'underarmour', 'underarmour', 'underarmour']"
+resized_padded_puma_211.jpg,puma,underarmour,puma,"['underarmour', 'puma', 'puma', 'puma', 'puma']"
+resized_padded_reebok_156.jpg,reebok,vans,vans,"['vans', 'vans', 'vans', 'vans', 'vans']"
+resized_padded_reebok_169.jpg,reebok,puma,puma,"['puma', 'reebok', 'puma', 'puma', 'reebok']"
+resized_padded_reebok_73.jpg,reebok,vans,vans,"['vans', 'vans', 'reebok', 'vans', 'vans']"
+resized_padded_underarmour_10.jpg,underarmour,puma,underarmour,"['puma', 'underarmour', 'puma', 'underarmour', 'underarmour']"

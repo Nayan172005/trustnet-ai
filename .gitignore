@@ -29,6 +29,10 @@ backend/.env
 data/features/*.npy
 data/features/*.json
 
+# Sneaker Image Dataset
+ml/counterfeit_image_detection/datasets/sampled_sneakers_1024x1024/
+!ml/counterfeit_image_detection/datasets/sampled_sneakers_1024x1024.zip
+
 # OS / Editor
 .vscode/
 .DS_Store
