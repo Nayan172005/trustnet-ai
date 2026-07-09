@@ -26,7 +26,7 @@ Total Models: 4
 | Component | Metric |
 |---|---:|
 | Fake Review Detection Accuracy | 96.99% |
-| Metadata Detection Accuracy | 100.00% |
+| Metadata Detection Accuracy | 99.00% |
 | Trust Fusion Test 1 Accuracy | 95.24% |
 | Trust Fusion Test 2 Accuracy | 76.67% |
 | Trust Fusion Test 3 Accuracy | 90.00% |
@@ -127,17 +127,6 @@ Classify shoe reviews using review text and rating metadata.
 | Fusion layer | Text vector concatenated with rating vector |
 | Parameters | 564,065 trainable |
 
-### Pipeline
-
-```text
-review_text + rating
--> tokenization and padding
--> BiLSTM text encoder
--> rating dense layer
--> concatenation
--> sigmoid classifier
-```
-
 ### Results
 
 | Metric | Score |
@@ -173,29 +162,15 @@ Classify product metadata as genuine or counterfeit-style text.
 | Model | Embedding + Bidirectional LSTM + Dense classifier |
 | Parameters | 1,559,681 trainable |
 
-### Pipeline
-
-```text
-metadata text
--> tokenizer
--> padded integer sequence
--> embedding layer
--> BiLSTM
--> dense classifier
--> authenticity score
-```
-
 ### Results
 
 | Metric | Score |
 |---|---:|
-| Accuracy | 100.00% |
-| Precision | 1.00 macro avg |
-| Recall | 1.00 macro avg |
-| F1 | 1.00 macro avg |
+| Accuracy | 99.00% |
+| Precision | 0.99 macro avg |
+| Recall | 0.99 macro avg |
+| F1 | 0.99 macro avg |
 | Test support | 1,057 |
-
-The notebook imports `confusion_matrix`, but does not store a printed metadata confusion matrix output.
 
 ## Fine-Tuned Image Retrieval
 
@@ -213,8 +188,6 @@ The image retrieval model learns brand-aware sneaker embeddings with triplet lea
 | Saved encoder | `ml/counterfeit_image_detection/models/embedding_model_finetuned.keras` |
 
 ### Fine-Tuned ResNet Encoder
-
-The final image encoder is a ResNet50-based embedding model. The repository's `Shared Encoder Architecture.png` diagram documents the deprecated metadata Siamese encoder, so it is not used here.
 
 | Layer / Stage | Output |
 |---|---|
@@ -235,16 +208,6 @@ The final image encoder is a ResNet50-based embedding model. The repository's `S
 ### Image Retrieval Pipeline
 
 ![Fine-Tuned Image Retrieval Pipeline](docs/architecture/Fine-Tuned%20Image%20Retrieval%20Pipeline.png)
-
-```text
-query image
--> fine-tuned ResNet encoder
--> 128-dimensional embedding
--> FAISS nearest-neighbor search
--> top-5 retrieved images
--> brand extraction
--> majority voting
-```
 
 | Artifact | Value |
 |---|---|
@@ -276,8 +239,6 @@ The t-SNE plot projects the learned 128-dimensional shoe embeddings into two dim
 | Top-1 Brand Accuracy | 66.67% |
 | Top-5 Brand Accuracy | 83.33% |
 | Majority Vote Accuracy | 73.33% |
-
-Unseen retrieval failures: 10.
 
 ## Multimodal Trust Fusion
 
@@ -368,19 +329,16 @@ The metadata similarity encoder was explored for comparing pairs of product meta
 ## Limitations
 
 - Retrieval accuracy drops on unseen images compared with the fine-tuned image evaluation.
-- Metadata classifier evaluation is based on generated genuine/counterfeit-style text pairs.
+- Metadata classifier evaluation is based on synthetic genuine/counterfeit-style text pairs.
 - Brand extraction is rule-based and limited to known sneaker brands.
 - Trust fusion weights are manually assigned.
-- Metadata confusion matrix output is not stored in the metadata classifier notebook.
 
 ## Future Work
 
 - Add a held-out real-world counterfeit metadata dataset.
 - Store evaluation outputs as versioned CSV or JSON files.
 - Replace rule-based brand extraction with a trained brand recognizer.
-- Tune trust fusion weights using validation data.
 - Add per-brand retrieval metrics.
-- Add calibrated confidence scores for each model.
 - Expand image retrieval evaluation beyond the current unseen test set.
 
 ## Key Learnings
