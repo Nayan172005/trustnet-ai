@@ -2,19 +2,38 @@
 node_modules/
 npm-debug.log
 
-# React build files
-client/build/
+# Frontend Build
+frontend/dist/
+frontend/build/
 
-# VS Code
-.vscode/
+# Python
+__pycache__/
+*.pyc
+venv/
 
-# MacOS Finder
-.DS_Store
+# Jupyter
+.ipynb_checkpoints/
+anaconda_projects/
 
-# Environment variables (local settings)
+# Environment Variables
 .env
+frontend/.env
+backend/.env
 
-# Log files
+# Logs
 *.log
 
+# ML Models / Large Files
 *.gguf
+
+# Generated Feature Files
+data/features/*.npy
+data/features/*.json
+
+# Sneaker Image Dataset
+ml/counterfeit_image_detection/datasets/sampled_sneakers_1024x1024/
+!ml/counterfeit_image_detection/datasets/sampled_sneakers_1024x1024.zip
+
+# OS / Editor
+.vscode/
+.DS_Store
