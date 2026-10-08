@@ -2,51 +2,46 @@
 
 ## Overview
 
-TrustNet-AI is a machine learning project for estimating product trust signals from reviews, product metadata, and sneaker images. The repository contains four ML components: Fake Review Detection, Metadata Counterfeit Detection, Fine-Tuned Image Retrieval, and Multimodal Trust Fusion.
+TrustNet-AI is a machine learning framework for evaluating e-commerce product authenticity across textual reviews, product metadata, and visual catalog imagery. The pipeline analyzes sneaker product listings through sequential natural language processing, deep visual metric retrieval, and late decision-level trust fusion.
 
-The final trust pipeline combines a metadata authenticity classifier, image retrieval over fine-tuned embeddings, brand agreement, and retrieval confidence. It outputs `GENUINE`, `SUSPICIOUS`, or `LIKELY_COUNTERFEIT`.
+The framework produces an interpretable composite trust score and categorical diagnostic verdicts: `GENUINE`, `SUSPICIOUS (Brand Mismatch)`, `SUSPICIOUS (Visual Anomaly)`, or `COUNTERFEIT`.
 
-The current implementation focuses on sneaker product listings.
+### Core ML Components
 
-### Components
-
-- Fake Review Detection
-- Metadata Counterfeit Detection
-- Fine-Tuned Image Retrieval
-- Multimodal Trust Fusion
-
-Total Models: 4
+- Fake Review Classifier: Sequential BiLSTM with review text and numeric rating inputs.
+- Metadata Authenticity Classifier: BiLSTM network detecting counterfeit textual patterns in listing descriptions.
+- Fine-Tuned Visual Feature Retrieval: ResNet-50 penultimate feature extractor (256-D) with FAISS nearest-neighbor search.
+- Multimodal Trust Fusion: Decision-level rule-governed fusion engine combining metadata authenticity, brand match ratio, and visual retrieval similarity.
 
 ## System Architecture
 
-![TrustNet Multimodal Trust Fusion Architecture](docs/architecture/TrustNet%20Multimodal%20Trust%20Fusion%20Architecture.png)
+![Multimodal Trust Fusion Architecture](docs/architecture/Multimodal%20Trust%20Fusion%20Architecture.png)
 
 ## Performance Summary
 
-| Component | Metric |
-|---|---:|
-| Fake Review Detection Accuracy | 96.99% |
-| Metadata Detection Accuracy | 99.00% |
-| Trust Fusion Test 1 Accuracy | 95.24% |
-| Trust Fusion Test 2 Accuracy | 76.67% |
-| Trust Fusion Test 3 Accuracy | 90.00% |
-| Trust Fusion Test 4 Accuracy | 93.33% |
-| Fine-Tuned Retrieval Top-1 Accuracy | 92.66% |
-| Fine-Tuned Retrieval Top-5 Accuracy | 96.74% |
-| Fine-Tuned Retrieval Majority Vote Accuracy | 93.68% |
-| Unseen FAISS Retrieval Top-1 Accuracy | 66.67% |
-| Unseen FAISS Retrieval Top-5 Accuracy | 83.33% |
-| Unseen FAISS Retrieval Majority Vote Accuracy | 73.33% |
+| Component | Evaluation Split / Scenario | Key Metric | Score |
+|---|---|---|---:|
+| Fake Review Detection | Held-out test set (365 reviews) | Accuracy | 96.99% |
+| Fake Review Detection | Held-out test set (365 reviews) | Macro F1-Score | 0.97 |
+| Metadata Counterfeit Detection | Held-out test set (1,057 listings) | Accuracy | 99.00% |
+| Metadata Counterfeit Detection | Held-out test set (1,057 listings) | Macro F1-Score | 0.99 |
+| Fine-Tuned Visual Retrieval (FAISS Top-1) | Unseen test set (397 images) | Top-1 Retrieval Accuracy | 90.68% |
+| Fine-Tuned Visual Retrieval (FAISS Top-5) | Unseen test set (397 images) | Top-5 Retrieval Accuracy | 93.95% |
+| Fine-Tuned Visual Retrieval (Majority Vote) | Unseen test set (397 images) | Majority Vote Brand Accuracy | 90.18% |
+| Trust Fusion: Test 1 | Seen Images + Genuine Metadata (21 items) | Genuine Detection Rate | 95.24% |
+| Trust Fusion: Test 2 | Unseen Images + Genuine Metadata (30 items) | Genuine Detection Rate | 90.00% |
+| Trust Fusion: Test 3 | Unseen Images + Brand Mismatch (30 items) | Mismatch Detection Rate | 93.33% |
+| Trust Fusion: Test 4 | Unseen Images + Counterfeit Metadata (30 items) | Counterfeit Detection Rate | 100.00% |
 
 ## Repository Structure
 
-| Path | Contents |
+| Directory | Purpose |
 |---|---|
-| `docs/architecture/` | Architecture diagrams and embedding visualization images |
-| `ml/fake_review_detection/` | Review dataset, BiLSTM notebooks, tokenizer artifacts, saved review models |
-| `ml/counterfeit_metadata_detection/` | Metadata datasets, metadata classifier, deprecated Siamese encoder, embeddings, tokenizers |
-| `ml/counterfeit_image_detection/` | Sneaker images, triplet dataset, ResNet fine-tuning, FAISS retrieval artifacts |
-| `ml/multimodal_trust_fusion/` | Trust fusion notebook and evaluation test sets |
+| `docs/architecture/` | Pipeline architecture diagrams and t-SNE embedding visualizations |
+| `ml/fake_review_detection/` | Review dataset, BiLSTM training notebooks, tokenizers, and saved models |
+| `ml/counterfeit_metadata_detection/` | Listing metadata datasets, BiLSTM classifier, tokenizers, and deprecated Siamese assets |
+| `ml/counterfeit_image_detection/` | Sneaker images, dataset splits, ResNet-50 fine-tuning, FAISS indexing, and embeddings |
+| `ml/multimodal_trust_fusion/` | Late trust-fusion engine and diagnostic evaluation test sets |
 
 ## Datasets
 
@@ -54,297 +49,228 @@ Total Models: 4
 
 | Property | Value |
 |---|---|
-| File | `ml/fake_review_detection/datasets/shoes_reviews.csv` |
-| Size | 1,821 reviews |
-| Class distribution | label `0`: 968, label `1`: 853 |
-| Features | `review_text`, `rating`, `label` |
+| File Path | `ml/fake_review_detection/datasets/shoes_reviews.csv` |
+| Total Records | 1,821 reviews |
+| Class Distribution | Label 0 (Genuine): 968, Label 1 (Fake): 853 |
+| Input Features | `review_text`, `rating`, `label` |
 
-### Metadata Dataset
+### Metadata Classifier Dataset
 
 | Property | Value |
 |---|---|
-| File | `ml/counterfeit_metadata_detection/datasets/metadata_classifier_dataset.csv` |
-| Size | 5,284 metadata rows |
-| Class distribution | label `0`: 2,642, label `1`: 2,642 |
-| Features | `metadata`, `label` |
-
-### Deprecated Siamese Dataset
-
-| Property | Value |
-|---|---:|
-| File | `ml/counterfeit_metadata_detection/datasets/siamese_metadata_dataset.csv` |
-| Pair count | 4,082 |
-| Similar pairs | 2,041 |
-| Dissimilar pairs | 2,041 |
+| File Path | `ml/counterfeit_metadata_detection/datasets/metadata_classifier_dataset.csv` |
+| Total Records | 5,284 listings |
+| Class Distribution | Label 0 (Counterfeit-Style): 2,642, Label 1 (Authentic): 2,642 |
+| Input Features | `metadata`, `label` |
 
 ### Sneaker Image Dataset
 
 | Property | Value |
 |---|---|
-| Image directory | `ml/counterfeit_image_detection/datasets/sampled_sneakers_1024x1024/` |
-| Image count | 2,642 |
-| Brands | Nike: 379, Vans: 919, New Balance: 226, Puma: 547, Reebok: 341, Under Armour: 230 |
-| Triplet file | `ml/counterfeit_image_detection/datasets/triplet_dataset_hard.csv` |
-| Triplet count | 22,580 |
+| Image Directory | `ml/counterfeit_image_detection/datasets/sampled_sneakers_1024x1024/` |
+| Image Count | 2,642 catalog photographs |
+| Image Resolution | 1024 x 1024 RGB (preprocessed to 224 x 224) |
+| Brand Coverage | Vans: 919, Puma: 547, Nike: 379, Reebok: 341, Under Armour: 230, New Balance: 226 |
+| Dataset Splits | Train: 1,848 (70%), Validation: 397 (15%), Test: 397 (15%) |
 
-### Product Scope
+### Diagnostic Trust Fusion Test Sets
 
-The visual retrieval system is currently designed for sneaker products and was trained on six brands:
-
-- Nike
-- Vans
-- Puma
-- Reebok
-- New Balance
-- Under Armour
-
-### Trust Fusion Test Sets
-
-| File | Rows | Purpose |
+| File Path | Sample Count | Evaluation Target |
 |---|---:|---|
-| `test1_genuine_metadata.csv` | 21 | Seen images with genuine metadata |
-| `test2_genuine_metadata.csv` | 30 | Unseen images with genuine metadata |
-| `test3_brand_mismatch.csv` | 30 | Unseen images with genuine metadata assigned to the wrong brand |
-| `test4_counterfeit_metadata.csv` | 30 | Unseen images with counterfeit-style metadata |
+| `ml/multimodal_trust_fusion/testing/test1_genuine_metadata.csv` | 21 | In-catalog (seen) images paired with genuine metadata |
+| `ml/multimodal_trust_fusion/testing/test2_genuine_metadata.csv` | 30 | Out-of-catalog (unseen) images paired with genuine metadata |
+| `ml/multimodal_trust_fusion/testing/test3_brand_mismatch.csv` | 30 | Unseen images paired with valid metadata from an opposing brand |
+| `ml/multimodal_trust_fusion/testing/test4_counterfeit_metadata.csv` | 30 | Unseen images paired with synthetic counterfeit-style metadata |
 
 ## Fake Review Detection
 
 ### Objective
 
-Classify shoe reviews using review text and rating metadata.
+Identify deceptive consumer reviews by jointly processing review text semantics and numerical rating metadata.
 
 ### Architecture
 
 ![Fake Review Detector V2 Architecture](docs/architecture/Fake%20Review%20Detector%20V2%20Architecture.png)
 
-| Item | Value |
+The text branch projects tokens through a 64-dimensional embedding layer into a 64-unit Bidirectional LSTM. The scalar rating is processed through a dense projection layer. The text and rating representations are concatenated and passed through dense classification layers with dropout regularization.
+
+| Specification | Value |
 |---|---|
 | Notebook | `ml/fake_review_detection/notebooks/FakeReviewLSTM_v2.ipynb` |
-| Saved model | `ml/fake_review_detection/models/fake_review_bilstm_v2.keras` |
-| Tokenizer | `ml/fake_review_detection/tokenizers/review_tokenizer_v2.pkl` |
-| Model inputs | Review text sequence, numeric rating |
-| Text encoder | Embedding + Bidirectional LSTM |
-| Fusion layer | Text vector concatenated with rating vector |
-| Parameters | 564,065 trainable |
+| Model Artifact | `ml/fake_review_detection/models/fake_review_bilstm_v2.keras` |
+| Tokenizer Artifact | `ml/fake_review_detection/tokenizers/review_tokenizer_v2.pkl` |
+| Vocabulary Size | 5,000 tokens (sequence length: 200) |
+| Total Parameters | 564,065 trainable |
 
 ### Results
+
+Evaluated on 365 held-out test reviews:
 
 | Metric | Score |
 |---|---:|
 | Accuracy | 96.99% |
-| Precision | 0.97 macro avg |
-| Recall | 0.97 macro avg |
-| F1 | 0.97 macro avg |
-| Test support | 365 |
+| Macro Precision | 0.97 |
+| Macro Recall | 0.97 |
+| Macro F1-Score | 0.97 |
 
-Confusion matrix:
-
-| True \ Predicted | 0 | 1 |
-|---|---:|---:|
-| 0 | 182 | 9 |
-| 1 | 2 | 172 |
+Confusion Matrix:
+- True Negative (Genuine): 182
+- False Positive: 9
+- False Negative: 2
+- True Positive (Fake): 172
 
 ## Metadata Counterfeit Detection
 
 ### Objective
 
-Classify product metadata as genuine or counterfeit-style text.
+Detect unauthorized, fraudulent, or counterfeit product descriptions by learning lexical and stylistic anomalies in listing metadata.
 
 ### Architecture
 
 ![TrustNet Metadata Classifier Architecture](docs/architecture/TrustNet%20Metadata%20Classifier%20Architecture.png)
 
-| Item | Value |
+Listing metadata is tokenized and mapped via a 128-dimensional embedding layer into a 64-unit Bidirectional LSTM. Sequence representations are processed by dense layers with dropout and a sigmoid output node for authenticity probability estimation.
+
+| Specification | Value |
 |---|---|
 | Notebook | `ml/counterfeit_metadata_detection/notebooks/CounterfeitMetadataLSTM_v1.ipynb` |
-| Saved model | `ml/counterfeit_metadata_detection/models/metadata_counterfeit_classifier_v1.keras` |
-| Tokenizer | `ml/counterfeit_metadata_detection/tokenizers/metadata_classifier_tokenizer_v1.pkl` |
-| Model | Embedding + Bidirectional LSTM + Dense classifier |
-| Parameters | 1,559,681 trainable |
+| Model Artifact | `ml/counterfeit_metadata_detection/models/metadata_counterfeit_classifier_v1.keras` |
+| Tokenizer Artifact | `ml/counterfeit_metadata_detection/tokenizers/metadata_classifier_tokenizer_v1.pkl` |
+| Vocabulary Size | 10,000 tokens (sequence length: 150) |
+| Total Parameters | 1,559,681 trainable |
 
 ### Results
+
+Evaluated on 1,057 held-out metadata listings:
 
 | Metric | Score |
 |---|---:|
 | Accuracy | 99.00% |
-| Precision | 0.99 macro avg |
-| Recall | 0.99 macro avg |
-| F1 | 0.99 macro avg |
-| Test support | 1,057 |
+| Macro Precision | 0.99 |
+| Macro Recall | 0.99 |
+| Macro F1-Score | 0.99 |
 
-## Fine-Tuned Image Retrieval
+## Visual Representation Learning and Image Retrieval
 
-### Triplet Learning Architecture
+### Objective
 
-![Fine-Tuning Triplet Network Architecture](docs/architecture/Fine-Tuning%20Triplet%20Network%20Architecture.png)
+Map product photographs into a metric embedding space to retrieve reference catalog items, verify brand consistency, and detect visual counterfeit anomalies without relying on closed-set classification.
 
-The image retrieval model learns brand-aware sneaker embeddings with triplet learning. Each training row contains an anchor image, a positive image from the same brand, and a negative image from a different brand.
+### Architecture and Retrieval Pipeline
 
-| Item | Value |
+![Fine-tuned Image Retrieval Pipeline Architecture](docs/architecture/Fine-tuned%20Image%20Retrieval%20Pipeline%20Architecture.png)
+
+A ResNet-50 backbone pre-trained on ImageNet is fine-tuned with its final 30 layers unfrozen. Rather than using the final 6-class softmax output for classification, the 256-dimensional penultimate dense layer representation is extracted and L2 normalized. 
+
+Embeddings from 1,848 authentic training images are indexed using FAISS `IndexFlatIP`. At inference, query images are projected into the 256-D metric space and compared via inner product (cosine similarity) to retrieve top-5 nearest catalog neighbors.
+
+| Specification | Value |
 |---|---|
-| Notebook | `ml/counterfeit_image_detection/notebooks/ResNet_FineTuning.ipynb` |
-| Triplet dataset | `ml/counterfeit_image_detection/datasets/triplet_dataset_hard.csv` |
-| Triplet count | 22,580 |
-| Saved encoder | `ml/counterfeit_image_detection/models/embedding_model_finetuned.keras` |
-
-### Fine-Tuned ResNet Encoder
-
-| Layer / Stage | Output |
-|---|---|
-| Image input | 224 x 224 x 3 |
-| ResNet50 backbone | 7 x 7 x 2048 |
-| GlobalAveragePooling2D | 2,048 |
-| Dense | 512 |
-| Dropout | 512 |
-| Dense | 128 |
-| L2 normalization | 128-dimensional embedding |
-
-| Parameter Type | Count |
-|---|---:|
-| Total params | 24,702,464 |
-| Trainable params | 10,046,080 |
-| Non-trainable params | 14,656,384 |
-
-### Image Retrieval Pipeline
-
-![Fine-Tuned Image Retrieval Pipeline](docs/architecture/Fine-Tuned%20Image%20Retrieval%20Pipeline.png)
-
-| Artifact | Value |
-|---|---|
-| Embeddings | `shoe_image_embeddings_finetuned.npy` |
-| Embedding shape | 2,642 x 128 |
-| Filenames | `shoe_image_filenames.npy` |
-| FAISS index | `shoe_faiss_index.index` |
+| Fine-Tuning Notebook | `ml/counterfeit_image_detection/notebooks/003_ResNet_FineTuning.ipynb` |
+| Retrieval Notebook | `ml/counterfeit_image_detection/notebooks/004_FaissImageRetrieval.ipynb` |
+| Base Backbone | ResNet-50 (ImageNet weights, last 30 layers trainable) |
+| Classifier Model | `ml/counterfeit_image_detection/models/brand_classifier_resnet50.keras` |
+| Embedding Model | `ml/counterfeit_image_detection/models/embedding_model_finetuned.keras` |
+| Total Parameters | 24,113,798 (14,976,262 trainable) |
+| Metric Index | FAISS `IndexFlatIP` (`shoe_faiss_index_v1.index`) |
+| Embeddings Artifact | `shoe_image_embeddings_finetuned_v1.npy` (1,848 x 256) |
 
 ### Embedding Space Visualization
 
 ![t-SNE Fine-Tuned Shoe Embedding Clusters](docs/architecture/tsne_finetuned_shoe_embedding_clusters.png)
 
-The t-SNE plot projects the learned 128-dimensional shoe embeddings into two dimensions. Brand clusters are visible after triplet fine-tuning. This supports the metric-learning objective used for image retrieval.
+t-SNE visualization of the 256-dimensional penultimate embeddings reveals distinct brand clustering across all six target footwear categories.
 
-### Retrieval Results
+### Retrieval Performance
 
-### Training Retrieval Performance
+Evaluated across top-5 nearest neighbors on 397 unseen test images:
 
-| Metric | Score |
-|---------|---------:|
-| Top-1 Accuracy | 92.66% |
-| Top-5 Accuracy | 96.74% |
-| Majority Vote Accuracy | 93.68% |
-
-### Unseen Retrieval Performance
-
-| Metric | Score |
-|---------|---------:|
-| Top-1 Brand Accuracy | 66.67% |
-| Top-5 Brand Accuracy | 83.33% |
-| Majority Vote Accuracy | 73.33% |
+| Metric | Validation Set (397 items) | Test Set (397 items) |
+|---|---:|---:|
+| Top-1 Retrieval Accuracy | 90.18% | 90.68% |
+| Top-5 Retrieval Accuracy | 93.95% | 93.95% |
+| Majority Vote Brand Accuracy | 89.67% | 90.18% |
 
 ## Multimodal Trust Fusion
 
 ### Objective
 
-Combine metadata authenticity and image retrieval signals into a single trust prediction.
+Integrate textual metadata authenticity, brand retrieval alignment, and visual cosine similarity into a unified diagnostic trust score.
 
-### Architecture
+### Decision Pipeline
 
-![TrustNet Multimodal Trust Fusion Architecture](docs/architecture/TrustNet%20Multimodal%20Trust%20Fusion%20Architecture.png)
+The late fusion framework computes a composite Trust Score from exactly three normalized signals:
 
-### Inputs
+- Metadata Authenticity Score (S_meta): Probability output from the BiLSTM metadata classifier in [0, 1].
+- Brand Match Ratio (R_brand): Fraction of the top-5 retrieved catalog images whose indexed brand matches the claimed brand in [0, 1].
+- Mean Top-K Retrieval Similarity (C_ret): Mean cosine similarity across the top-5 retrieved neighbors in [-1, 1].
 
-| Input | Source |
-|---|---|
-| Metadata Authenticity Score | Metadata counterfeit classifier |
-| Brand Match Ratio | Fraction of top-5 retrieved images matching query metadata brand |
-| Retrieval Confidence | Mean similarity score from retrieved images |
+Composite formulation:
+```text
+Trust Score = 0.50 * S_meta + 0.35 * R_brand + 0.15 * max(0, C_ret)
+```
 
-Trust Score =
+Decision thresholds and diagnostic logic:
+- `GENUINE`: Trust Score >= 0.75, R_brand >= 0.60, S_meta >= 0.70.
+- `SUSPICIOUS (Brand Mismatch)`: R_brand < 0.40.
+- `SUSPICIOUS (Visual Anomaly)`: C_ret < 0.50.
+- `COUNTERFEIT`: Trust Score < 0.50 or S_meta < 0.40.
 
-- 50% Metadata Score
-- 35% Brand Match Ratio
-- 15% Retrieval Confidence
+### Diagnostic Evaluation Results
 
-### Outputs
+Evaluated across four controlled marketplace scenarios:
 
-| Output | Threshold |
-|---|---|
-| `GENUINE` | Trust score >= 0.75 |
-| `SUSPICIOUS` | Trust score >= 0.50 and < 0.75 |
-| `LIKELY_COUNTERFEIT` | Trust score < 0.50 |
+| Test Set | Scenario Description | Sample Size | Primary Evaluation Metric | Result |
+|---|---|---:|---|---:|
+| Test 1 | In-catalog images with genuine metadata | 21 | Genuine classification rate | 95.24% |
+| Test 2 | Unseen images with genuine metadata | 30 | Genuine classification rate | 90.00% |
+| Test 3 | Unseen images with brand mismatch metadata | 30 | Brand mismatch detection rate | 93.33% |
+| Test 4 | Unseen images with counterfeit metadata | 30 | Counterfeit detection rate | 100.00% |
 
-## Trust Fusion Evaluation
+## Deprecated Approaches
 
-| Test | Scenario | Accuracy |
-|---|---|---:|
-| Test 1 | Seen Images + Genuine Metadata | 95.24% |
-| Test 2 | Unseen Images + Genuine Metadata | 76.67% |
-| Test 3 | Unseen Images + Genuine Metadata with Brand Mismatch | 90.00% |
-| Test 4 | Unseen Images + Counterfeit Metadata | 93.33% |
+During architecture development, alternative similarity and metric learning formulations were implemented and evaluated before adopting the final production pipeline.
 
-The fusion system performs strongly on brand mismatch and counterfeit metadata scenarios while maintaining reasonable generalization on unseen products.
+### Deprecated Approach 1: Triplet Loss ResNet Fine-Tuning
 
-## Deprecated Approach: Metadata Similarity Encoder
+![Fine-Tuning Triplet Network Architecture](docs/architecture/Fine-Tuning%20Triplet%20Network%20Architecture.png)
+
+#### Description
+- Architecture: Triplet network trained with semi-hard and hard triplet mining (anchor, positive, negative image pairs).
+- Notebook: `ml/counterfeit_image_detection/notebooks/002_GenerateTriplets - (Deprecated).ipynb`.
+- Objective: Minimize distance between intra-brand pairs while enforcing a margin separation against inter-brand negatives.
+
+#### Why It Was Deprecated
+- High sample variance in triplet mining resulted in unstable optimization dynamics.
+- Intra-brand diversity (e.g., lifestyle sneakers vs. performance running shoes within Nike) caused cluster degradation.
+- Direct fine-tuning of the ResNet-50 backbone with categorical cross-entropy followed by 256-D penultimate feature extraction yielded superior visual separation (93.95% Top-5 retrieval) with significantly faster convergence.
+
+---
+
+### Deprecated Approach 2: Metadata Siamese Similarity Encoder
 
 ![Metadata Siamese Architecture](docs/architecture/Metadata%20Siamese%20Architecture.png)
 
 ![Shared Encoder Architecture](docs/architecture/Shared%20Encoder%20Architecture.png)
 
-### Purpose
+#### Description
+- Architecture: Twin BiLSTM encoders sharing weights across paired metadata inputs to compute 128-dimensional sentence vectors.
+- Notebooks: `ml/counterfeit_metadata_detection/notebooks/SiameseMetadataEncoder_v1.ipynb`, `MetadataSimilarityRetrieval.ipynb`.
+- Dataset: `ml/counterfeit_metadata_detection/datasets/siamese_metadata_dataset.csv` (4,082 text pairs).
+- Validation Loss: 0.0295 MSE; Validation MAE: 0.0739.
 
-The metadata similarity encoder was explored for comparing pairs of product metadata strings and producing reusable metadata embeddings.
+#### Why It Was Deprecated
+- Pairwise textual similarity measures lexical and stylistic proximity between two descriptions rather than whether a single listing is inherently deceptive.
+- The downstream trust fusion pipeline requires a calibrated authenticity score (S_meta), which cannot be directly obtained from relative vector distance without an authentic anchor database.
+- Replacing the Siamese encoder with the supervised BiLSTM Metadata Classifier directly yielded a calibrated authenticity score with 99.00% accuracy.
 
-### Why It Was Explored
+## Technology Stack
 
-- It used a shared text encoder for both metadata inputs.
-- It generated 128-dimensional metadata embeddings.
-- It supported similarity retrieval experiments with generated metadata embeddings.
-
-### Why It Was Replaced
-
-- The final trust pipeline needs an authenticity score, not only metadata-to-metadata similarity.
-- The metadata counterfeit classifier directly outputs a score used by the trust fusion logic.
-- The final TrustNet pipeline uses the Metadata Counterfeit Classifier and not the Siamese Encoder.
-
-### Siamese Metrics
-
-| Metric | Value |
-|---|---:|
-| Pair count | 4,082 |
-| Similar pairs | 2,041 |
-| Dissimilar pairs | 2,041 |
-| Trainable params | 328,064 |
-| Final validation loss | 0.0295 |
-| Final validation MAE | 0.0739 |
-
-## Technologies
-
-| Category | Tools |
+| Category | Libraries and Tools |
 |---|---|
-| Deep Learning | TensorFlow, Keras, LSTM, BiLSTM, triplet learning |
-| Computer Vision | ResNet50, image embeddings, FAISS retrieval |
-| NLP | Keras tokenizers, sequence padding, text embeddings |
-| Data Processing | pandas, NumPy, CSV datasets |
-| Visualization | Matplotlib, t-SNE, architecture diagrams |
-
-## Limitations
-
-- Retrieval accuracy drops on unseen images compared with the fine-tuned image evaluation.
-- Metadata classifier evaluation is based on synthetic genuine/counterfeit-style text pairs.
-- Brand extraction is rule-based and limited to known sneaker brands.
-- Trust fusion weights are manually assigned.
-
-## Future Work
-
-- Add a held-out real-world counterfeit metadata dataset.
-- Store evaluation outputs as versioned CSV or JSON files.
-- Replace rule-based brand extraction with a trained brand recognizer.
-- Add per-brand retrieval metrics.
-- Expand image retrieval evaluation beyond the current unseen test set.
-
-## Key Learnings
-
-- BiLSTM text models work well for structured review and metadata classification tasks in this repository.
-- Triplet learning improves brand-aware image embedding retrieval.
-- FAISS enables fast nearest-neighbor search over generated image embeddings.
-- Metadata authenticity and retrieval agreement provide complementary trust signals.
-- Unseen image retrieval remains the main source of trust fusion errors.
+| Deep Learning | TensorFlow 2.x, Keras, BiLSTM, ResNet-50 |
+| Vector Retrieval | FAISS (Facebook AI Similarity Search) |
+| NLP & Tokenization | Keras Preprocessing, Tokenizer, Sequence Padding |
+| Numerical & Data Processing | NumPy, Pandas, Scikit-Learn |
+| Dimensionality Reduction | Scikit-Learn t-SNE |
+| Visualization | Matplotlib |
