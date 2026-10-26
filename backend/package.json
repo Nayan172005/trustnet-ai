@@ -1,0 +1,16 @@
+{
+  "name": "trustnet-backend",
+  "version": "1.0.0",
+  "description": "Express backend for TrustNet-AI counterfeit and fake review detection",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.9",
+    "express": "^4.21.2",
+    "mongoose": "^9.11.4",
+    "multer": "^1.4.5-lts.1"
+  }
+}

@@ -37,3 +37,6 @@ ml/counterfeit_image_detection/datasets/sampled_sneakers_1024x1024/
 # OS / Editor
 .vscode/
 .DS_Store
+
+backend/data
+backend/uploads
